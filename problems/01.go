@@ -5,20 +5,6 @@ import (
 	"slices"
 )
 
-func Solve_1(lines [][]int) {
-	var lines_1 []int
-	var lines_2 []int
-	for _, line := range lines {
-		if len(line) != 2 {
-			panic(line)
-		}
-		lines_1 = append(lines_1, line[0])
-		lines_2 = append(lines_2, line[1])
-	}
-	p01_1(lines_1, lines_2)
-	p01_2(lines_1, lines_2)
-}
-
 func p01_1(lines_1 []int, lines_2 []int) {
 	slices.Sort(lines_1)
 	slices.Sort(lines_2)
@@ -54,4 +40,18 @@ func p01_2(lines_1 []int, lines_2 []int) {
 		similarity += val * count
 	}
 	fmt.Println(similarity)
+}
+
+func Solve_1(lines [][]int) {
+	var lines_1 []int
+	var lines_2 []int
+	for _, line := range lines {
+		if len(line) != 2 {
+			panic(line)
+		}
+		lines_1 = append(lines_1, line[0])
+		lines_2 = append(lines_2, line[1])
+	}
+	p01_1(lines_1, lines_2)
+	p01_2(lines_1, lines_2)
 }

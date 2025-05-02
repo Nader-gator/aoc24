@@ -2,21 +2,14 @@ package problems
 
 import (
 	"fmt"
-	// "slices"
-	// "math"
+	"slices"
 )
-
-func Solve_2(lines [][]int) {
-	p02_1(lines)
-	p02_2(lines)
-}
 
 func between(x1, x2, v int) bool {
 	return v >= x1 && v <= x2
 }
 
 func hasIssues(report []int, i int, j int, increasing bool) bool {
-	fmt.Println(i, j)
 	if j >= len(report) {
 		return false
 	}
@@ -28,10 +21,8 @@ func hasIssues(report []int, i int, j int, increasing bool) bool {
 		increasing && !between(1, 3, second-first),
 		!increasing && (first < second),
 		!increasing && !between(1, 3, first-second):
-		println("HI")
 		return true
 	default:
-		println("BIU")
 		return false
 	}
 }
@@ -58,6 +49,8 @@ func p02_1(lines [][]int) {
 func p02_2(lines [][]int) {
 	safe_reports := 0
 	for _, report := range lines {
+		rev_done := false
+	do_rev:
 		is_safe := true
 		increasing := report[0] < report[len(report)-1]
 		forgiveness := 1
@@ -67,8 +60,7 @@ func p02_2(lines [][]int) {
 				if forgiveness < 1 {
 					is_safe = false
 					break
-				}
-				if hasIssues(report, i, i+2, increasing) && i+2 >= len(report) {
+				} else if hasIssues(report, i, i+2, increasing) {
 					is_safe = false
 					break
 				} else {
@@ -79,7 +71,15 @@ func p02_2(lines [][]int) {
 		}
 		if is_safe {
 			safe_reports += 1
+		} else if !rev_done {
+			slices.Reverse(report)
+			rev_done = true
+			goto do_rev
 		}
 	}
 	fmt.Println(safe_reports)
+}
+func Solve_2(lines [][]int) {
+	p02_1(lines)
+	p02_2(lines)
 }
