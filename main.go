@@ -22,6 +22,7 @@ func twoDNums(problem_num int) (lines [][]int) {
 		lines = append(lines, []int{})
 		lines[line_idx] = []int{}
 		for _, line := range strings.Fields(scanner.Text()) {
+			fmt.Println(line)
 			val, err := strconv.Atoi(line)
 			if err != nil {
 				panic(err)
@@ -35,7 +36,7 @@ func twoDNums(problem_num int) (lines [][]int) {
 	return
 }
 
-func longStr(problem_num int) (values string) {
+func longStr(problem_num int) string {
 	f, err := os.ReadFile(fmt.Sprintf("inputs/%02d.txt", problem_num))
 	if err != nil {
 		panic(err)
@@ -137,6 +138,50 @@ func p8(problem_num int) (grid p.P8Grid) {
 	return
 }
 
+func p10(problem_num int) (lines [][]int) {
+
+	for _, line := range linesStr(problem_num) {
+
+		var row []int
+		for _, nv := range strings.Split(line, "") {
+			var v int
+			if nv == "." {
+				v = -1
+			} else {
+
+				iv, err := strconv.Atoi(nv)
+				if err != nil {
+					panic(err)
+				}
+				v = iv
+			}
+
+			row = append(row, v)
+		}
+		lines = append(lines, row)
+	}
+	return
+}
+
+func p11(problem_num int) (lines []string) {
+	line := longStr(problem_num)
+	for _, v := range strings.Split(line, " ") {
+		lines = append(lines, v)
+	}
+	return
+}
+
+func p12(problem_num int) (lines [][]string) {
+	for _, v := range linesStr(problem_num) {
+		var row []string
+		for _, ch := range strings.Split(v, "") {
+			row = append(row, ch)
+		}
+		lines = append(lines, row)
+	}
+	return
+}
+
 func main() {
 	if len(os.Args) != 2 {
 		panic("bad args")
@@ -175,6 +220,15 @@ func main() {
 	case 9:
 		line := longStr(9)
 		p.Solve_9(line)
+	case 10:
+		lines := p10(problem_num)
+		p.Solve_10(lines)
+	case 11:
+		stones := p11(problem_num)
+		p.Solve_11(stones)
+	case 12:
+		groups := p12(problem_num)
+		p.Solve_12(groups)
 	default:
 		panic("Problem not solved yet")
 	}
